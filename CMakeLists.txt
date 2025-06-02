@@ -1,12 +1,25 @@
 project("Hall")
 
-add_compile_options(-nostdlib
-                    -DHAVE_MMAP=0 # don't compile MMAP
-                    -D_LDBL_EQ_DBL=0 # no long double support
-                    -fno-exceptions
+add_compile_options(
+  -fno-exceptions
+  -nostdlib
+  -fno-unwind-tables
+  -fno-rtti
+  -march=rv32im
+  -Os
+  -ffreestanding
+  -Bstatic
+  -nostdinc
 )
 
-add_link_options(-nostdlib)
+add_link_options(
+  -nostdlib
+  -T ${WUEHANS_LINKERSCRIPT}
+  -Wl,--gc-sections
+  -ffreestanding
+  -Bstatic
+  -nostdlib
+)
 
 add_library(Hall STATIC
   "source/Audio.cpp"
