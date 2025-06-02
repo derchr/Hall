@@ -1,5 +1,4 @@
 #pragma once
-#include <stdint.h>
 
 volatile void* AUDIO_START 						= (void*) 0x2000100;
 volatile short** AUDIO_START_ADDRESS 			= (short**)(AUDIO_START + 4);
