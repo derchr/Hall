@@ -29,6 +29,7 @@ add_library(Hall STATIC
 
 include_directories(Hall
   PUBLIC include
+  PUBLIC SYSTEM ${WUEHANS_ROOT}/include/newlib
 )
 
 target_link_libraries(Hall
