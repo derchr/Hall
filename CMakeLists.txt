@@ -14,7 +14,7 @@ add_compile_options(
 
 add_link_options(
   -nostdlib
-  -T ${WUEHANS_LINKERSCRIPT}
+  # -T ${WUEHANS_LINKERSCRIPT}
   -Wl,--gc-sections
   -ffreestanding
   -Bstatic
@@ -29,12 +29,12 @@ add_library(Hall STATIC
 
 include_directories(Hall
   PUBLIC include
-  PUBLIC SYSTEM ${WUEHANS_ROOT}/include/newlib
+  # PUBLIC SYSTEM ${WUEHANS_ROOT}/include/newlib
 )
 
-target_link_libraries(Hall
-  ${WUEHANS_ROOT}/lib/newlib/libc.a
-  ${WUEHANS_ROOT}/lib/newlib/libg.a
-  ${WUEHANS_ROOT}/lib/newlib/libgloss.a
-  ${WUEHANS_ROOT}/lib/newlib/libm.a
-)
+# target_link_libraries(Hall
+#   ${WUEHANS_ROOT}/lib/newlib/libc.a
+#   ${WUEHANS_ROOT}/lib/newlib/libg.a
+#   ${WUEHANS_ROOT}/lib/newlib/libgloss.a
+#   ${WUEHANS_ROOT}/lib/newlib/libm.a
+# )
