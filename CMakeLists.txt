@@ -27,8 +27,8 @@ add_library(Hall STATIC
   "source/Video.cpp"
 )
 
-include_directories(Hall
-  PUBLIC include
+target_include_directories(Hall
+  PUBLIC SYSTEM include
   # PUBLIC SYSTEM ${WUEHANS_ROOT}/include/newlib
 )
 

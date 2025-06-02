@@ -1,22 +1,22 @@
-#include "Audio.h"
+#include <Video.h>
 
 volatile void* GPU_START					= (void*)0x02000000;
-volatile unsigned short* GPU_IMAGE_START	= (unsigned short*)(GPU_START + 0);
-volatile unsigned short* GPU_IMAGE_X_OFFSET	= (unsigned short*)(GPU_START + 4);
-volatile unsigned short* GPU_IMAGE_Y_OFFSET	= (unsigned short*)(GPU_START + 8);
-volatile unsigned short* GPU_IMAGE_WIDTH	= (unsigned short*)(GPU_START + 12);
-volatile unsigned short* GPU_WIDTH			= (unsigned short*)(GPU_START + 16);
-volatile unsigned short* GPU_HEIGHT			= (unsigned short*)(GPU_START + 20);
-volatile unsigned short* GPU_SCREEN_X		= (unsigned short*)(GPU_START + 24);
-volatile unsigned short* GPU_SCREEN_Y		= (unsigned short*)(GPU_START + 28);
-volatile unsigned short* GPU_CLEAR_COLOR	= (unsigned short*)(GPU_START + 32);
-volatile bool* GPU_COMMAND_DRAW				= (bool*)(GPU_START + 36);
-volatile bool* GPU_COMMAND_CLEAR			= (bool*)(GPU_START + 40);
-volatile bool* GPU_IS_BUSY					= (bool*)(GPU_START + 44);
-volatile bool* GPU_VSYNC					= (bool*)(GPU_START + 48);
-volatile bool* GPU_HSYNC					= (bool*)(GPU_START + 52);
-volatile bool* GPU_COMMAND_SWAP_BUFFERS		= (bool*)(GPU_START + 56);
-volatile bool* VSYNC_BUFFER_SWAP			= (bool*)(GPU_START + 60);
+volatile unsigned short** GPU_IMAGE_START	= (volatile unsigned short**)GPU_START + 0;
+volatile unsigned short* GPU_IMAGE_X_OFFSET	= (volatile unsigned short*)GPU_START + 4;
+volatile unsigned short* GPU_IMAGE_Y_OFFSET	= (volatile unsigned short*)GPU_START + 8;
+volatile unsigned short* GPU_IMAGE_WIDTH	= (volatile unsigned short*)GPU_START + 12;
+volatile unsigned short* GPU_WIDTH			= (volatile unsigned short*)GPU_START + 16;
+volatile unsigned short* GPU_HEIGHT			= (volatile unsigned short*)GPU_START + 20;
+volatile unsigned short* GPU_SCREEN_X		= (volatile unsigned short*)GPU_START + 24;
+volatile unsigned short* GPU_SCREEN_Y		= (volatile unsigned short*)GPU_START + 28;
+volatile unsigned short* GPU_CLEAR_COLOR	= (volatile unsigned short*)GPU_START + 32;
+volatile bool* GPU_COMMAND_DRAW				= (volatile bool*)GPU_START + 36;
+volatile bool* GPU_COMMAND_CLEAR			= (volatile bool*)GPU_START + 40;
+volatile bool* GPU_IS_BUSY					= (volatile bool*)GPU_START + 44;
+volatile bool* GPU_VSYNC					= (volatile bool*)GPU_START + 48;
+volatile bool* GPU_HSYNC					= (volatile bool*)GPU_START + 52;
+volatile bool* GPU_COMMAND_SWAP_BUFFERS		= (volatile bool*)GPU_START + 56;
+volatile bool* VSYNC_BUFFER_SWAP			= (volatile bool*)GPU_START + 60;
 
 
 void Hall::Draw(unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth)

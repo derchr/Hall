@@ -4,8 +4,8 @@ namespace Hall
 {
 	static const int SYSTEM_CLK_FREQUENCY = 50000000; //50 MHz
 	static void* const SDRAM_START = 0x0; //Start of the RAM. It is 32 MB large
-	static void* const BOOTLOADER_START = 0x02010000 //Start of the bootloader. It is 32 kB large
-	static void* const SD_CARD_START = 0x80000000; //Start of the SD-Card
+	static void* const BOOTLOADER_START = (void* const) 0x02010000; //Start of the bootloader. It is 32 kB large
+	static void* const SD_CARD_START = (void* const) 0x80000000; //Start of the SD-Card
 
 	/// <summary>
 	/// Returns a 4-Byte excerpt of the 8-Byte system time in ticks since startup. The precision determines the byte offset.

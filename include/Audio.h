@@ -1,19 +1,19 @@
 #pragma once
 
 volatile void* AUDIO_START 						= (void*) 0x2000100;
-volatile short** AUDIO_START_ADDRESS 			= (short**)(AUDIO_START + 4);
-volatile int* AUDIO_SAMPLE_COUNT 				= (int*)(AUDIO_START + 8);
-volatile int* AUDIO_LOOP_START 					= (int*)(AUDIO_START + 12);
-volatile int* AUDIO_LOOP_END 					= (int*)(AUDIO_START + 16);
-volatile int* AUDIO_CURRENT_POSITION 			= (int*)(AUDIO_START + 20);
-volatile short* AUDIO_LAST_SAMPLE 			= (short*)(AUDIO_START + 24);
-volatile unsigned char* AUDIO_VOLUME 			= (unsigned char*)(AUDIO_START + 28);
-volatile bool* AUDIO_IS_LOOPING 				= (bool*)(AUDIO_START + 32);
-volatile bool* AUDIO_IS_PLAYING 				= (bool*)(AUDIO_START + 36);
-volatile bool* AUDIO_IS_MONO 					= (bool*)(AUDIO_START + 40);
-volatile bool* AUDIO_IS_RIGHT 					= (bool*)(AUDIO_START + 44);
-unsigned char* AUDIO_GLOBAL_VOLUME 		= (unsigned char*)(AUDIO_START + 48); //I think we can skip volatile for these two
-unsigned char* AUDIO_CHANNEL_SELECT 	= (unsigned char*)(AUDIO_START + 52); //Because they will never change and always address the same value
+volatile short** AUDIO_START_ADDRESS 			= (volatile short**)AUDIO_START + 4;
+volatile int* AUDIO_SAMPLE_COUNT 				= (volatile int*)AUDIO_START + 8;
+volatile int* AUDIO_LOOP_START 					= (volatile int*)AUDIO_START + 12;
+volatile int* AUDIO_LOOP_END 					= (volatile int*)AUDIO_START + 16;
+volatile int* AUDIO_CURRENT_POSITION 			= (volatile int*)AUDIO_START + 20;
+volatile short* AUDIO_LAST_SAMPLE 			= (volatile short*)AUDIO_START + 24;
+volatile unsigned char* AUDIO_VOLUME 			= (volatile unsigned char*)AUDIO_START + 28;
+volatile bool* AUDIO_IS_LOOPING 				= (volatile bool*)AUDIO_START + 32;
+volatile bool* AUDIO_IS_PLAYING 				= (volatile bool*)AUDIO_START + 36;
+volatile bool* AUDIO_IS_MONO 					= (volatile bool*)AUDIO_START + 40;
+volatile bool* AUDIO_IS_RIGHT 					= (volatile bool*)AUDIO_START + 44;
+unsigned char* AUDIO_GLOBAL_VOLUME 		= (unsigned char*)AUDIO_START + 48; //I think we can skip volatile for these two
+unsigned char* AUDIO_CHANNEL_SELECT 	= (unsigned char*)AUDIO_START + 52; //Because they will never change and always address the same value
 
 namespace Hall
 {
