@@ -1,5 +1,4 @@
 project("Hall")
-enable_language(C, C++)
 
 add_compile_options(-nostdlib
                     -DHAVE_MMAP=0 # don't compile MMAP
