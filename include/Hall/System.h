@@ -20,4 +20,17 @@ namespace Hall
 	/// <param name="id">Must be in the range [0,1]</param>
 	/// <returns>Each button corresponds to one bit: 0 - B, 1 - Y, 2 - Select, 3 - Start, 4 - Up, 5 - Down, 6 - Left, 7 - Right, 8 - A, 9 - X, 10 - L, 11 - R</returns>
 	unsigned short GetController(int id);
+
+	bool GetA(unsigned short controller);
+	bool GetB(unsigned short controller);
+	bool GetX(unsigned short controller);
+	bool GetY(unsigned short controller);
+	bool GetStart(unsigned short controller);
+	bool GetSelect(unsigned short controller);
+	bool GetUp(unsigned short controller);
+	bool GetDown(unsigned short controller);
+	bool GetLeft(unsigned short controller);
+	bool GetRight(unsigned short controller);
+	bool GetL(unsigned short controller);
+	bool GetR(unsigned short controller);
 }
