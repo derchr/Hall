@@ -1,6 +1,6 @@
 #include <Hall/System.h>
 
-volatile void* SYSTEM_TIME = (volatile void*)0x02000300;
+volatile char* SYSTEM_TIME = (volatile void*)0x02000300;
 volatile unsigned int* SYSTEM_TIME_0 = (volatile unsigned int*)(SYSTEM_TIME + 0); //Least precise
 volatile unsigned int* SYSTEM_TIME_1 = (volatile unsigned int*)(SYSTEM_TIME + 4);
 volatile unsigned int* SYSTEM_TIME_2 = (volatile unsigned int*)(SYSTEM_TIME + 8);
