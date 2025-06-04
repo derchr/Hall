@@ -21,3 +21,63 @@ unsigned short Hall::GetController(int id)
 {
 	return *(CONTROLLER_0 + id);
 }
+
+bool Hall::GetA(unsigned short controller)
+{
+	return controller & (1 << 8);
+}
+
+bool Hall::GetB(unsigned short controller)
+{
+	return controller & (1 << 1);
+}
+
+bool Hall::GetX(unsigned short controller)
+{
+	return controller & (1 << 9);
+}
+
+bool Hall::GetY(unsigned short controller)
+{
+	return controller & (1 << 2);
+}
+
+bool Hall::GetStart(unsigned short controller)
+{
+	return controller & (1 << 3);
+}
+
+bool Hall::GetSelect(unsigned short controller)
+{
+	return controller & (1 << 2);
+}
+
+bool Hall::GetUp(unsigned short controller)
+{
+	return controller & (1 << 4);
+}
+
+bool Hall::GetDown(unsigned short controller)
+{
+	return controller & (1 << 5);
+}
+
+bool Hall::GetLeft(unsigned short controller)
+{
+	return controller & (1 << 6);
+}
+
+bool Hall::GetRight(unsigned short controller)
+{
+	return controller & (1 << 7);
+}
+
+bool Hall::GetL(unsigned short controller)
+{
+	return controller & (1 << 10);
+}
+
+bool Hall::GetR(unsigned short controller)
+{
+	return controller & (1 << 11);
+}
