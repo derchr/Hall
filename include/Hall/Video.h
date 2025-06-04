@@ -21,7 +21,7 @@ namespace Hall
 	/// <summary>
 	/// Clears the whole screen with the given color
 	/// </summary>
-	/// <param name="color">The format is 5R5G5B1A, with the alpha bit being lsb</param>
+	/// <param name="color">The format is R5G5B5A1, with the alpha bit being lsb</param>
 	void Clear(unsigned short color);
 
 	void SetData(unsigned short* data);
