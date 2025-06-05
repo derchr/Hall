@@ -36,7 +36,7 @@ bool Hall::GetA(unsigned short controller)
 
 bool Hall::GetB(unsigned short controller)
 {
-	return controller & (1 << 1);
+	return controller & (1 << 0);
 }
 
 bool Hall::GetX(unsigned short controller)
@@ -46,7 +46,7 @@ bool Hall::GetX(unsigned short controller)
 
 bool Hall::GetY(unsigned short controller)
 {
-	return controller & (1 << 2);
+	return controller & (1 << 1);
 }
 
 bool Hall::GetStart(unsigned short controller)
