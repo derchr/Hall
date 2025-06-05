@@ -11,8 +11,15 @@ volatile char* CONTROLLER_START = (volatile char*)0x02000200;
 volatile unsigned short* CONTROLLER_0 = (volatile unsigned short*)(CONTROLLER_START + 0);
 volatile unsigned short* CONTROLLER_1 = (volatile unsigned short*)(CONTROLLER_START + 2);
 
+unsigned long long Hall::GetSystemTime()
+{
+	unsigned long long result = *SYSTEM_TIME_0;
+	result = result << 32;
+	result += *SYSTEM_TIME_4;
+	return result;
+}
 
-unsigned int Hall::GetSystemTime(int precision)
+unsigned int Hall::GetSystemTimeExcerpt(int precision)
 {
 	return *(SYSTEM_TIME_0 + precision);
 }
