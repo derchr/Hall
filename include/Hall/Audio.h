@@ -34,7 +34,7 @@ namespace Hall
 	/// <param name="channelID_left">The ID of the channel for the left audio. Must be within [0,7]</param>
 	/// <param name="channelID_right">The ID of the channel for the right audio. Must be within [0,7]</param>
 	/// <param name="data">A pointer to the first sample of the audio data</param>
-	/// <param name="sampleCount">The total number of samples in the audio data</param>
+	/// <param name="sampleCount">The total number of samples PER CHANNEL in the audio data</param>
 	/// <param name="volume">The channel's local volume. 0 is muted, 128 is the default, 255 is max</param>
 	void SetupStereo(int channelID_left, int channelID_right, short* data, int sampleCount, unsigned char volume = 128);
 
@@ -44,7 +44,7 @@ namespace Hall
 	/// <param name="channelID_left">The ID of the channel for the left audio. Must be within [0,7]</param>
 	/// <param name="channelID_right">The ID of the channel for the right audio. Must be within [0,7]</param>
 	/// <param name="data">A pointer to the first sample of the audio data</param>
-	/// <param name="sampleCount">The total number of samples in the audio data</param>
+	/// <param name="sampleCount">The total number of samples PER CHANNEL in the audio data</param>
 	/// <param name="loopStart">The index of the first sample of the loop (inclusive)</param>
 	/// <param name="loopEnd">The index of the last sample of the loop (exclusive?)</param>
 	/// <param name="volume">The channel's local volume. 0 is muted, 128 is the default, 255 is max</param>
