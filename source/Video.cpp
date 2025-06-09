@@ -1,7 +1,7 @@
 #include <Hall/Video.h>
 
 volatile char* GPU_START					= (char*)0x02000000;
-volatile unsigned short** GPU_IMAGE_START	= (volatile unsigned short**)(GPU_START + 0);
+volatile unsigned short const** GPU_IMAGE_START	= (volatile unsigned short const**)(GPU_START + 0);
 volatile unsigned short* GPU_IMAGE_X_OFFSET	= (volatile unsigned short*)(GPU_START + 4);
 volatile unsigned short* GPU_IMAGE_Y_OFFSET	= (volatile unsigned short*)(GPU_START + 8);
 volatile unsigned short* GPU_IMAGE_WIDTH	= (volatile unsigned short*)(GPU_START + 12);
