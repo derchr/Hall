@@ -21,7 +21,7 @@ void Hall::SetGlobalVolume(unsigned char volume)
 	*AUDIO_GLOBAL_VOLUME = volume;
 }
 
-void Hall::SetupMono(int channelID, short* data, int sampleCount, unsigned char volume)
+void Hall::SetupMono(int channelID, const short* data, int sampleCount, unsigned char volume)
 {
 	*AUDIO_CHANNEL_SELECT = 1 << channelID;
 	*AUDIO_START_ADDRESS = data;
@@ -33,7 +33,7 @@ void Hall::SetupMono(int channelID, short* data, int sampleCount, unsigned char 
 	*AUDIO_IS_MONO = true;
 }
 
-void Hall::SetupMono(int channelID, short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
+void Hall::SetupMono(int channelID, const short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
 {
 	*AUDIO_CHANNEL_SELECT = 1 << channelID;
 	*AUDIO_START_ADDRESS = data;
@@ -47,7 +47,7 @@ void Hall::SetupMono(int channelID, short* data, int sampleCount, unsigned int l
 	*AUDIO_IS_MONO = true;
 }
 
-void Hall::SetupStereo(int channelID_left, int channelID_right, short* data, int sampleCount, unsigned char volume)
+void Hall::SetupStereo(int channelID_left, int channelID_right, const short* data, int sampleCount, unsigned char volume)
 {
 	*AUDIO_CHANNEL_SELECT = (1 << channelID_left) | (1 << channelID_right);
 	*AUDIO_START_ADDRESS = data;
@@ -63,7 +63,7 @@ void Hall::SetupStereo(int channelID_left, int channelID_right, short* data, int
 	*AUDIO_IS_RIGHT = true;
 }
 
-void Hall::SetupStereo(int channelID_left, int channelID_right, short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
+void Hall::SetupStereo(int channelID_left, int channelID_right, const short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
 {
 	*AUDIO_CHANNEL_SELECT = (1 << channelID_left) | (1 << channelID_right);
 	*AUDIO_START_ADDRESS = data;
