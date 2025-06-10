@@ -1,7 +1,7 @@
 #include <Hall/Audio.h>
 
 volatile char* AUDIO_START 						= (char*) 0x2000100;
-volatile short** AUDIO_START_ADDRESS 			= (volatile short**)(AUDIO_START + 4);
+volatile const short** AUDIO_START_ADDRESS 			= (volatile short**)(AUDIO_START + 4);
 volatile int* AUDIO_SAMPLE_COUNT 				= (volatile int*)(AUDIO_START + 8);
 volatile int* AUDIO_LOOP_START 					= (volatile int*)(AUDIO_START + 12);
 volatile int* AUDIO_LOOP_END 					= (volatile int*)(AUDIO_START + 16);
