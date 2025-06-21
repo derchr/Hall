@@ -2,6 +2,8 @@
 
 namespace Hall
 {
+	typedef unsigned short Color;
+
 	static Color* const COLOR_TABLE_MEMORY = (Color*)0x02002000;
 
 	enum CTType  //Color table type
@@ -26,7 +28,6 @@ namespace Hall
 		COLOR = 1   //Takes the image data from the given color
 	};
 
-	typedef unsigned short Color; 
 
 	const int SCREEN_HEIGHT = 240;
 	const int SCREEN_WIDTH = 400;
