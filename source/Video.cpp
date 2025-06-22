@@ -18,12 +18,12 @@ short* GPU_SCREEN_Y              		  = (short*)			(GPU_START + 52);
 Hall::Color* GPU_DRAW_COLOR               = (Hall::Color*)		(GPU_START + 56);
 Hall::Shape* GPU_DRAW_SHAPE               = (Hall::Shape*)		(GPU_START + 60);
 Hall::ColorSource* GPU_DRAW_COLOR_SOURCE  = (Hall::ColorSource*)(GPU_START + 64);
-bool* GPU_COMMAND_DRAW                    = (bool*)				(GPU_START + 68);
-bool* GPU_IS_BUSY                         = (bool*)				(GPU_START + 72);
-bool* GPU_VSYNC                           = (bool*)				(GPU_START + 76);
-bool* GPU_HSYNC                           = (bool*)				(GPU_START + 80);
-bool* GPU_COMMAND_SWAP_BUFFERS            = (bool*)				(GPU_START + 84);
-bool* GPU_VSYNC_BUFFER_SWAP               = (bool*)				(GPU_START + 88);
+volatile bool* GPU_COMMAND_DRAW           = (bool*)				(GPU_START + 68);
+volatile bool* GPU_IS_BUSY                = (bool*)				(GPU_START + 72);
+volatile bool* GPU_VSYNC                  = (bool*)				(GPU_START + 76);
+volatile bool* GPU_HSYNC                  = (bool*)				(GPU_START + 80);
+volatile bool* GPU_COMMAND_SWAP_BUFFERS   = (bool*)				(GPU_START + 84);
+volatile bool* GPU_VSYNC_BUFFER_SWAP      = (bool*)				(GPU_START + 88);
 
 void Hall::SetImage(const Color* image, unsigned short imageWidth)
 {
