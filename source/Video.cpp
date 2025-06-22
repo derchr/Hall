@@ -31,6 +31,13 @@ void Hall::SetImage(const Color* image, unsigned short imageWidth)
 	*GPU_IMAGE_WIDTH = imageWidth;
 }
 
+void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth)
+{
+	//This is ugly code, but it represents the hardware
+	*GPU_IMAGE_START = (const Color*)image;
+	*GPU_IMAGE_WIDTH = imageWidth;
+}
+
 void Hall::SetExcerpt(short x, short y)
 {
 	*GPU_IMAGE_X = x;

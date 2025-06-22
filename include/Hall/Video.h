@@ -3,6 +3,7 @@
 namespace Hall
 {
 	typedef unsigned short Color;
+	typedef unsigned int   IndexContainer;
 
 	static Color* const COLOR_TABLE_MEMORY = (Color*)0x02002000;
 
@@ -36,6 +37,12 @@ namespace Hall
 	/// @param image A pointer to the first pixel of the image
 	/// @param imageWidth The width of the image in pixels
 	void SetImage(const Color* image, unsigned short imageWidth);
+
+	/// @brief
+	/// @param image A pointer to the first pixel of the image
+	/// @param imageWidth The width of the image in pixels
+	void SetImage(const IndexContainer* image, unsigned short imageWidth);
+
 
 	/// @brief Sets the x and y position of the excerpt of the image that will be drawn
 	/// @param x The x position within the image
