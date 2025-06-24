@@ -1,17 +1,17 @@
 #include <Hall/Audio.h>
 
-volatile char* AUDIO_START 						= (char*) 0x2000100;
-volatile const short** AUDIO_START_ADDRESS 			= (volatile const short**)(AUDIO_START + 4);
-volatile int* AUDIO_SAMPLE_COUNT 				= (volatile int*)(AUDIO_START + 8);
-volatile int* AUDIO_LOOP_START 					= (volatile int*)(AUDIO_START + 12);
-volatile int* AUDIO_LOOP_END 					= (volatile int*)(AUDIO_START + 16);
-volatile int* AUDIO_CURRENT_POSITION 			= (volatile int*)(AUDIO_START + 20);
-volatile short* AUDIO_LAST_SAMPLE 			= (volatile short*)(AUDIO_START + 24);
-volatile unsigned char* AUDIO_VOLUME 			= (volatile unsigned char*)(AUDIO_START + 28);
-volatile bool* AUDIO_IS_LOOPING 				= (volatile bool*)(AUDIO_START + 32);
-volatile bool* AUDIO_IS_PLAYING 				= (volatile bool*)(AUDIO_START + 36);
-volatile bool* AUDIO_IS_MONO 					= (volatile bool*)(AUDIO_START + 40);
-volatile bool* AUDIO_IS_RIGHT 					= (volatile bool*)(AUDIO_START + 44);
+volatile char* AUDIO_START 				= (char*) 0x2000100;
+const short** AUDIO_START_ADDRESS 		= (const short**)(AUDIO_START + 4);
+int* AUDIO_SAMPLE_COUNT 				= (int*)(AUDIO_START + 8);
+int* AUDIO_LOOP_START 					= (int*)(AUDIO_START + 12);
+int* AUDIO_LOOP_END 					= (int*)(AUDIO_START + 16);
+volatile int* AUDIO_CURRENT_POSITION 		= (volatile int*)(AUDIO_START + 20);
+volatile short* AUDIO_LAST_SAMPLE 		= (volatile short*)(AUDIO_START + 24);
+unsigned char* AUDIO_VOLUME 			= (unsigned char*)(AUDIO_START + 28);
+bool* AUDIO_IS_LOOPING 					= (bool*)(AUDIO_START + 32);
+volatile bool* AUDIO_IS_PLAYING 		= (volatile bool*)(AUDIO_START + 36);
+bool* AUDIO_IS_MONO 					= (bool*)(AUDIO_START + 40);
+bool* AUDIO_IS_RIGHT 					= (bool*)(AUDIO_START + 44);
 unsigned char* AUDIO_GLOBAL_VOLUME 		= (unsigned char*)(AUDIO_START + 48); //I think we can skip volatile for these two
 unsigned char* AUDIO_CHANNEL_SELECT 	= (unsigned char*)(AUDIO_START + 52); //Because they will never change and always address the same value
 
@@ -103,7 +103,7 @@ void Hall::SetData(unsigned char channelSelect, short* data)
 void Hall::SetLoop(unsigned char channelSelect, bool isLooping)
 {
 	*AUDIO_CHANNEL_SELECT = channelSelect;
-	*AUDIO_IS_LOOPING;
+	*AUDIO_IS_LOOPING = true;
 }
 
 void Hall::SetLoopBoundaries(unsigned char channelSelect, int start, int end)
