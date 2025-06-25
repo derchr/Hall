@@ -1,4 +1,8 @@
 #include <Hall/Video.h>
+extern "C" 
+{
+	#include "raylib.h"
+}
 
 volatile char* GPU_START				  = (char*)0x02000000;
 const Hall::Color** GPU_IMAGE_START      = (const Hall::Color**)(GPU_START + 0);
