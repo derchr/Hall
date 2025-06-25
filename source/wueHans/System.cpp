@@ -16,6 +16,11 @@ void Hall::Init()
 	
 }
 
+bool Hall::ShouldClose()
+{
+	return false;
+}
+
 unsigned long long Hall::GetSystemTime()
 {
 	unsigned long long result = *SYSTEM_TIME_0;

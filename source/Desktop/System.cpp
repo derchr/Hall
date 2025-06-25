@@ -29,6 +29,11 @@ void Hall::Init()
 	camera.zoom = 1.0f;
 }
 
+bool Hall::ShouldClose()
+{
+	return WindowShouldClose();
+}
+
 unsigned long long Hall::GetSystemTime()
 {
 	unsigned long long result = *SYSTEM_TIME_0;

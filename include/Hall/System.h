@@ -13,6 +13,12 @@ namespace Hall
 	void Init();
 
 	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns> True, if the program was requested to terminate, else false</returns>
+	bool ShouldClose();
+
+	/// <summary>
 	/// Returns an 8-Byte int, that represents the number of ticks that passed since the system's boot-up. Divide by SYSTEM_CLK_FREQUENCY to get seconds
 	/// </summary>
 	/// <returns>The system time since boot-up in ticks</returns>
