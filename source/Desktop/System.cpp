@@ -1,4 +1,8 @@
-#include <Hall/System.h>
+#include <Hall/Hall.h>
+extern "C" 
+{
+	#include "raylib.h"
+}
 
 volatile char* SYSTEM_TIME = (volatile char*)0x02000300;
 volatile unsigned int* SYSTEM_TIME_0 = (volatile unsigned int*)(SYSTEM_TIME + 0); //Least precise
@@ -10,6 +14,20 @@ volatile unsigned int* SYSTEM_TIME_4 = (volatile unsigned int*)(SYSTEM_TIME + 16
 volatile char* CONTROLLER_START = (volatile char*)0x02000200;
 volatile unsigned short* CONTROLLER_0 = (volatile unsigned short*)(CONTROLLER_START + 0);
 volatile unsigned short* CONTROLLER_1 = (volatile unsigned short*)(CONTROLLER_START + 2);
+
+extern ::RenderTexture2D screen;
+extern ::Camera2D camera;
+
+void Hall::Init()
+{
+	::SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	::InitWindow(800, 480, "wueHans Desktop Simulatior 2025");
+	screen = ::LoadRenderTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
+	camera.offset = { 0, 0 };
+	camera.rotation = 0.0f;
+	camera.target = { 0, 0 };
+	camera.zoom = 1.0f;
+}
 
 unsigned long long Hall::GetSystemTime()
 {

@@ -29,6 +29,9 @@ volatile bool* GPU_HSYNC                  = (bool*)				(GPU_START + 80);
 volatile bool* GPU_COMMAND_SWAP_BUFFERS   = (bool*)				(GPU_START + 84);
 volatile bool* GPU_VSYNC_BUFFER_SWAP      = (bool*)				(GPU_START + 88);
 
+static ::RenderTexture2D screen;
+static ::Camera2D camera;
+
 void Hall::SetImage(const Color* image, unsigned short imageWidth)
 {
 	*GPU_IMAGE_START = image;

@@ -8,6 +8,11 @@ namespace Hall
 	static void* const SD_CARD_START = (void* const) 0x80000000; //Start of the SD-Card
 
 	/// <summary>
+	/// Initialises the system
+	/// </summary>
+	void Init();
+
+	/// <summary>
 	/// Returns an 8-Byte int, that represents the number of ticks that passed since the system's boot-up. Divide by SYSTEM_CLK_FREQUENCY to get seconds
 	/// </summary>
 	/// <returns>The system time since boot-up in ticks</returns>
