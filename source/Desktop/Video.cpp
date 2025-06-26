@@ -32,8 +32,8 @@ bool 				HSYNC;
 bool 				COMMAND_SWAP_BUFFERS;
 bool 				VSYNC_BUFFER_SWAP;
 
-static ::RenderTexture2D screen;
-static ::Camera2D camera;
+::RenderTexture2D screen;
+::Camera2D camera;
 
 static void AddImage(Hall::Color* data, short imageWidth)
 {
