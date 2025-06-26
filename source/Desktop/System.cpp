@@ -81,33 +81,33 @@ unsigned short Hall::GetController(int id)
 
 	if(id == 0)
 	{
-		left = ::IsKeyPressed(CONT0_LEFT);
-		right = ::IsKeyPressed(CONT0_RIGHT);
-		up = ::IsKeyPressed(CONT0_UP);
-		down = ::IsKeyPressed(CONT0_DOWN);
-		start = ::IsKeyPressed(CONT0_START);
-		select = ::IsKeyPressed(CONT0_SELECT);
-		a = ::IsKeyPressed(CONT0_A);
-		b = ::IsKeyPressed(CONT0_B);
-		x = ::IsKeyPressed(CONT0_X);
-		y = ::IsKeyPressed(CONT0_Y);
-		l = ::IsKeyPressed(CONT0_L);
-		r = ::IsKeyPressed(CONT0_R);
+		left = ::IsKeyDown(CONT0_LEFT);
+		right = ::IsKeyDown(CONT0_RIGHT);
+		up = ::IsKeyDown(CONT0_UP);
+		down = ::IsKeyDown(CONT0_DOWN);
+		start = ::IsKeyDown(CONT0_START);
+		select = ::IsKeyDown(CONT0_SELECT);
+		a = ::IsKeyDown(CONT0_A);
+		b = ::IsKeyDown(CONT0_B);
+		x = ::IsKeyDown(CONT0_X);
+		y = ::IsKeyDown(CONT0_Y);
+		l = ::IsKeyDown(CONT0_L);
+		r = ::IsKeyDown(CONT0_R);
 	}
 	if(id == 1)
 	{
-		left = ::IsKeyPressed(CONT1_LEFT);
-		right = ::IsKeyPressed(CONT1_RIGHT);
-		up = ::IsKeyPressed(CONT1_UP);
-		down = ::IsKeyPressed(CONT1_DOWN);
-		start = ::IsKeyPressed(CONT1_START);
-		select = ::IsKeyPressed(CONT1_SELECT);
-		a = ::IsKeyPressed(CONT1_A);
-		b = ::IsKeyPressed(CONT1_B);
-		x = ::IsKeyPressed(CONT1_X);
-		y = ::IsKeyPressed(CONT1_Y);
-		l = ::IsKeyPressed(CONT1_L);
-		r = ::IsKeyPressed(CONT1_R);
+		left = ::IsKeyDown(CONT1_LEFT);
+		right = ::IsKeyDown(CONT1_RIGHT);
+		up = ::IsKeyDown(CONT1_UP);
+		down = ::IsKeyDown(CONT1_DOWN);
+		start = ::IsKeyDown(CONT1_START);
+		select = ::IsKeyDown(CONT1_SELECT);
+		a = ::IsKeyDown(CONT1_A);
+		b = ::IsKeyDown(CONT1_B);
+		x = ::IsKeyDown(CONT1_X);
+		y = ::IsKeyDown(CONT1_Y);
+		l = ::IsKeyDown(CONT1_L);
+		r = ::IsKeyDown(CONT1_R);
 	}
 	unsigned short result = 0;
 	result |= b 		<< 0;
