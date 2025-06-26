@@ -247,6 +247,8 @@ void Hall::SetCommandClear()
 	Draw();
 }
 
+void _UpdateAudio(float frameTime);
+
 void Hall::SetCommandSwapBuffers()
 {
 	::EndMode2D();
@@ -255,6 +257,7 @@ void Hall::SetCommandSwapBuffers()
 	::DrawTexturePro(screen.texture, { 0, 0, (float)screen.texture.width, (float)-screen.texture.height}, { 0, 0, (float)::GetScreenWidth(), (float)::GetScreenHeight()}, {0, 0}, 0, ::Color{255, 255, 255, 255});
 	::EndDrawing();
 
+	_UpdateAudio(GetFrameTime());
 
 	::BeginTextureMode(screen);
 	::BeginMode2D(camera);
