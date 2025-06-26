@@ -50,6 +50,8 @@ void Hall::Init()
 
 	::BeginTextureMode(screen);
 	::BeginMode2D(camera);
+
+	::InitAudioDevice();
 }
 
 bool Hall::ShouldClose()
@@ -120,6 +122,8 @@ unsigned short Hall::GetController(int id)
 	result |= x 		<< 9;
 	result |= l 		<< 10;
 	result |= r 		<< 11;
+
+	return result;
 }
 
 bool Hall::GetA(unsigned short controller)
