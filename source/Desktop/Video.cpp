@@ -40,7 +40,7 @@ static void AddImage(Hall::Color* data, short imageWidth)
 	::Image image;
 	image.data = data;
 	image.width = imageWidth;
-	image.height = 4000; //Just needs to be higher than any actual height. I hope this does not breaks something
+	image.height = 480; //Just needs to be higher than any actual height. I hope this does not breaks something
 	image.mipmaps = 1;
 	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
 	Texture2D texture = ::LoadTextureFromImage(image);
