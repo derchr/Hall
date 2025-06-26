@@ -131,8 +131,6 @@ void Hall::SetRectangle(signed x, signed y, signed width, signed height)
 	EXCERPT_HEIGHT = height;
 }
 
-#include <iostream>
-
 void Hall::Draw()
 {
 	float source_x = IMAGE_FLIP_X ? -IMAGE_X : IMAGE_X;
@@ -141,7 +139,7 @@ void Hall::Draw()
 	float scale_y = IMAGE_SCALE_Y < 0 ? (1 / (float)-IMAGE_SCALE_Y) : IMAGE_SCALE_Y;
 	float dest_width = EXCERPT_WIDTH * scale_x;
 	float dest_height = EXCERPT_HEIGHT * scale_y;
-	::Vector2 origin = {dest_width / 2, dest_height / 2};
+	::Vector2 origin = {0, 0};
 	::Color color = {255, 255, 255, 255};
 
 	if (DRAW_COLOR_SOURCE == MEMORY)
