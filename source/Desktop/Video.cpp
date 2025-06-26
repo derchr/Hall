@@ -279,7 +279,9 @@ bool Hall::GetVSync()
 	//This is a bit stupid, but the swap buffer command is already ensuring that the game loop
 	//waits for vsync. Just returning true here will of course not work, of VSync is needed for
 	//something else than assuring timing
-	return true;
+	static bool temp = false;
+	temp = !temp;
+	return temp;
 }
 
 bool Hall::GetHSync()
