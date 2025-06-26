@@ -166,6 +166,7 @@ void Hall::Draw()
 
 void Hall::Draw(const unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth)
 {
+	AddImage((Color*)data, dataWidth);
 	SetColorSource(Hall::MEMORY);
 	IMAGE_START = (Color*)data;
 	IMAGE_X = xOffset;
