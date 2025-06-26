@@ -1,4 +1,5 @@
 #include <Hall/Hall.h>
+#include "hans_logo.h"
 extern "C" 
 {
 	#include "raylib.h"
@@ -47,11 +48,19 @@ void Hall::Init()
 	camera.zoom = 1.0f;
 
 	::SetTargetFPS(30);
+	::InitAudioDevice();
+
+	::Image image;
+	image.data = hans_logo;
+	image.width = HANS_LOGO_WIDTH;
+	image.height = HANS_LOGO_HEIGHT;
+	image.mipmaps = 1;
+	image.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
+	::SetWindowIcon(image);
 
 	::BeginTextureMode(screen);
 	::BeginMode2D(camera);
 
-	::InitAudioDevice();
 }
 
 bool Hall::ShouldClose()
