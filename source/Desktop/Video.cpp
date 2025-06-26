@@ -37,6 +37,7 @@ bool 				VSYNC_BUFFER_SWAP;
 
 static void AddImage(Hall::Color* data, short imageWidth)
 {
+	if(textures.count(data)) return;
 	::Image image;
 	image.data = data;
 	image.width = imageWidth;
@@ -130,12 +131,14 @@ void Hall::SetRectangle(signed x, signed y, signed width, signed height)
 	EXCERPT_HEIGHT = height;
 }
 
+#include <iostream>
+
 void Hall::Draw()
 {
 	float source_x = IMAGE_FLIP_X ? -IMAGE_X : IMAGE_X;
 	float source_y = IMAGE_FLIP_Y ? -IMAGE_Y : IMAGE_Y;
-	float scale_x = IMAGE_SCALE_X < 0 ? (1 / -IMAGE_SCALE_X) : IMAGE_SCALE_X;
-	float scale_y = IMAGE_SCALE_Y < 0 ? (1 / -IMAGE_SCALE_Y) : IMAGE_SCALE_Y;
+	float scale_x = IMAGE_SCALE_X < 0 ? (1 / (float)-IMAGE_SCALE_X) : IMAGE_SCALE_X;
+	float scale_y = IMAGE_SCALE_Y < 0 ? (1 / (float)-IMAGE_SCALE_Y) : IMAGE_SCALE_Y;
 	float dest_width = EXCERPT_WIDTH * scale_x;
 	float dest_height = EXCERPT_HEIGHT * scale_y;
 	::Vector2 origin = {dest_width / 2, dest_height / 2};
@@ -143,7 +146,7 @@ void Hall::Draw()
 
 	if (DRAW_COLOR_SOURCE == MEMORY)
 	{
-	::DrawTexturePro(textures[IMAGE_START], 
+		::DrawTexturePro(textures[IMAGE_START], 
 		{ source_x, source_y, (float)EXCERPT_WIDTH, (float)EXCERPT_HEIGHT }, 
 		{ (float)SCREEN_X, (float)SCREEN_Y, dest_width, dest_height },
 		origin, 
@@ -170,7 +173,9 @@ void Hall::Draw(const unsigned short* data, unsigned short xOffset, unsigned sho
 	SetColorSource(Hall::MEMORY);
 	IMAGE_START = (Color*)data;
 	IMAGE_X = xOffset;
-	IMAGE_Y= yOffset;
+	IMAGE_Y = yOffset;
+	IMAGE_SCALE_X = 1;
+	IMAGE_SCALE_Y = 1;
 	IMAGE_WIDTH = dataWidth;
 	EXCERPT_WIDTH = width;
 	EXCERPT_HEIGHT = height;
