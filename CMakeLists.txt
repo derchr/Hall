@@ -34,33 +34,32 @@ target_include_directories(Hall_Desktop
 )
 
 #This library cointains the bare metal implementation of Hall for wueHans
-#add_library(Hall STATIC
-#  "source/wueHans/Audio.cpp"
-#  "source/wueHans/System.cpp"
-#  "source/wueHans/Video.cpp"
-#)
+add_library(Hall STATIC
+  "source/wueHans/Audio.cpp"
+  "source/wueHans/System.cpp"
+  "source/wueHans/Video.cpp"
+)
 
-#target_compile_options(Hall
-#  PUBLIC -fno-exceptions
-#  PUBLIC -nostdlib
-#  PUBLIC -fno-unwind-tables
-#  PUBLIC -fno-rtti
-#  PUBLIC -march=rv32im
-#  PUBLIC -Os
-#  PUBLIC -ffreestanding
-#  PUBLIC -Bstatic
-#  PUBLIC -nostdinc
-#)
-#
-#target_link_options(Hall
-#  PUBLIC -nostdlib
-#  PUBLIC -Wl,--gc-sections
-#  PUBLIC -ffreestanding
-#  PUBLIC -Bstatic
-#  PUBLIC -nostdlib
-#)
-#
-#target_include_directories(Hall
-#  PUBLIC SYSTEM include
-#)
-#
+target_compile_options(Hall
+  PUBLIC -fno-exceptions
+  PUBLIC -nostdlib
+  PUBLIC -fno-unwind-tables
+  PUBLIC -fno-rtti
+  PUBLIC -march=rv32im
+  PUBLIC -Os
+  PUBLIC -ffreestanding
+  PUBLIC -Bstatic
+  PUBLIC -nostdinc
+)
+
+target_link_options(Hall
+  PUBLIC -nostdlib
+  PUBLIC -Wl,--gc-sections
+  PUBLIC -ffreestanding
+  PUBLIC -Bstatic
+  PUBLIC -nostdlib
+)
+
+target_include_directories(Hall
+  PUBLIC SYSTEM include
+)
