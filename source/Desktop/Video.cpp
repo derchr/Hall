@@ -4,6 +4,7 @@ extern "C"
 {
 	#include "raylib.h"
 }
+#include <exception>
 
 std::map<Hall::Color*, ::Texture2D> textures;
 
@@ -95,6 +96,7 @@ void Hall::SetColorTable(CTType type)
 
 void Hall::SetColorTable(CTType type, const Color* colorTable)
 {
+	throw std::exception("COLOR TABLES ARE NOT SUPPORTED IN DESKTOP VERSION OF HALL");
 	COLOR_TABLE_TYPE = type;
 	COLOR_TABLE_OFFSET = (Color*)colorTable;
 }
