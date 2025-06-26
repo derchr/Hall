@@ -27,6 +27,11 @@ void Hall::Init()
 	camera.rotation = 0.0f;
 	camera.target = { 0, 0 };
 	camera.zoom = 1.0f;
+
+	::SetTargetFPS(60);
+
+	::BeginTextureMode(screen);
+	::BeginMode2D(camera);
 }
 
 bool Hall::ShouldClose()
