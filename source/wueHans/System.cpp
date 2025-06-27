@@ -11,6 +11,16 @@ volatile char* CONTROLLER_START = (volatile char*)0x02000200;
 volatile unsigned short* CONTROLLER_0 = (volatile unsigned short*)(CONTROLLER_START + 0);
 volatile unsigned short* CONTROLLER_1 = (volatile unsigned short*)(CONTROLLER_START + 2);
 
+void Hall::Init()
+{
+	
+}
+
+bool Hall::ShouldClose()
+{
+	return false;
+}
+
 unsigned long long Hall::GetSystemTime()
 {
 	unsigned long long result = *SYSTEM_TIME_0;

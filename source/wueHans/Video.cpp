@@ -113,6 +113,7 @@ void Hall::Draw()
 
 void Hall::Draw(const unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth)
 {
+	SetColorSource(Hall::MEMORY);
 	*GPU_IMAGE_START = data;
 	*GPU_IMAGE_X = xOffset;
 	*GPU_IMAGE_Y= yOffset;

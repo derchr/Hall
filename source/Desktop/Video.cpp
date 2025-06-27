@@ -1,127 +1,187 @@
 #include <Hall/Video.h>
+#include <map>
+extern "C" 
+{
+	#include "raylib.h"
+}
+#include <exception>
 
-volatile char* GPU_START				  = (char*)0x02000000;
-const Hall::Color** GPU_IMAGE_START      = (const Hall::Color**)(GPU_START + 0);
-short* GPU_IMAGE_X               		  = (short*)			(GPU_START + 4);
-short* GPU_IMAGE_Y               		  = (short*)			(GPU_START + 8);
-unsigned short* GPU_IMAGE_WIDTH           = (unsigned short*)	(GPU_START + 12);
-short* GPU_IMAGE_SCALE_X                  = (short*)			(GPU_START + 16);
-short* GPU_IMAGE_SCALE_Y                  = (short*)			(GPU_START + 20);
-bool* GPU_IMAGE_FLIP_X                    = (bool*)				(GPU_START + 24);
-bool* GPU_IMAGE_FLIP_Y                    = (bool*)				(GPU_START + 28);
-Hall::CTType* GPU_COLOR_TABLE_TYPE        = (Hall::CTType*)		(GPU_START + 32);
-const Hall::Color** GPU_COLOR_TABLE_OFFSET= (const Hall::Color**)(GPU_START + 36);
-short* GPU_EXCERPT_WIDTH         		  = (short*)			(GPU_START + 40);
-short* GPU_EXCERPT_HEIGHT        		  = (short*)			(GPU_START + 44);
-short* GPU_SCREEN_X              		  = (short*)			(GPU_START + 48);
-short* GPU_SCREEN_Y              		  = (short*)			(GPU_START + 52);
-Hall::Color* GPU_DRAW_COLOR               = (Hall::Color*)		(GPU_START + 56);
-Hall::Shape* GPU_DRAW_SHAPE               = (Hall::Shape*)		(GPU_START + 60);
-Hall::ColorSource* GPU_DRAW_COLOR_SOURCE  = (Hall::ColorSource*)(GPU_START + 64);
-volatile bool* GPU_COMMAND_DRAW           = (bool*)				(GPU_START + 68);
-volatile bool* GPU_IS_BUSY                = (bool*)				(GPU_START + 72);
-volatile bool* GPU_VSYNC                  = (bool*)				(GPU_START + 76);
-volatile bool* GPU_HSYNC                  = (bool*)				(GPU_START + 80);
-volatile bool* GPU_COMMAND_SWAP_BUFFERS   = (bool*)				(GPU_START + 84);
-volatile bool* GPU_VSYNC_BUFFER_SWAP      = (bool*)				(GPU_START + 88);
+std::map<Hall::Color*, ::Texture2D> textures;
+
+Hall::Color* 		IMAGE_START;
+short 				IMAGE_X;
+short 				IMAGE_Y;
+unsigned short 		IMAGE_WIDTH;
+short 				IMAGE_SCALE_X;
+short 				IMAGE_SCALE_Y;
+bool 				IMAGE_FLIP_X;
+bool 				IMAGE_FLIP_Y;
+Hall::CTType 		COLOR_TABLE_TYPE;
+Hall::Color*	 	COLOR_TABLE_OFFSET;
+short 				EXCERPT_WIDTH;
+short 				EXCERPT_HEIGHT;
+short 				SCREEN_X;
+short 				SCREEN_Y;
+Hall::Color 		DRAW_COLOR;
+Hall::Shape 		DRAW_SHAPE;
+Hall::ColorSource 	DRAW_COLOR_SOURCE;
+bool 				COMMAND_DRAW;
+bool 				IS_BUSY;
+bool 				VSYNC;
+bool 				HSYNC;
+bool 				COMMAND_SWAP_BUFFERS;
+bool 				VSYNC_BUFFER_SWAP;
+
+::RenderTexture2D screen;
+::Camera2D camera;
+
+static void AddImage(Hall::Color* data, short imageWidth)
+{
+	if(textures.count(data)) return;
+	::Image image;
+	image.data = data;
+	image.width = imageWidth;
+	image.height = 480; //Just needs to be higher than any actual height. I hope this does not breaks something
+	image.mipmaps = 1;
+	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
+	Texture2D texture = ::LoadTextureFromImage(image);
+
+	textures[data] = texture;
+}
 
 void Hall::SetImage(const Color* image, unsigned short imageWidth)
 {
-	*GPU_IMAGE_START = image;
-	*GPU_IMAGE_WIDTH = imageWidth;
+	AddImage((Color*)image, imageWidth);
+	IMAGE_START = (Color*)image;
+	IMAGE_WIDTH = imageWidth;
 }
 
 void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth)
 {
 	//This is ugly code, but it represents the hardware
-	*GPU_IMAGE_START = (const Color*)image;
-	*GPU_IMAGE_WIDTH = imageWidth;
+	AddImage((Color*)image, imageWidth);
+	IMAGE_START = (Color*)image;
+	IMAGE_WIDTH = imageWidth;
 }
 
 void Hall::SetExcerpt(short x, short y)
 {
-	*GPU_IMAGE_X = x;
-	*GPU_IMAGE_Y = y;
+	IMAGE_X = x;
+	IMAGE_Y = y;
 }
 
 void Hall::SetExcerpt(short x, short y, short width, short height)
 {
-	*GPU_IMAGE_X = x;
-	*GPU_IMAGE_Y = y;
-	*GPU_EXCERPT_WIDTH = width;
-	*GPU_EXCERPT_HEIGHT = height;
+	IMAGE_X = x;
+	IMAGE_Y = y;
+	EXCERPT_WIDTH = width;
+	EXCERPT_HEIGHT = height;
 }
 
 void Hall::SetScale(short x, short y)
 {
-	*GPU_IMAGE_SCALE_X = x;
-	*GPU_IMAGE_SCALE_Y = y;
+	IMAGE_SCALE_X = x;
+	IMAGE_SCALE_Y = y;
 }
 
 void Hall::SetFlip(bool x, bool y)
 {
-	*GPU_IMAGE_FLIP_X = x;
-	*GPU_IMAGE_FLIP_Y = y;
+	IMAGE_FLIP_X = x;
+	IMAGE_FLIP_Y = y;
 }
 
 void Hall::SetColorTable(CTType type)
 {
-	*GPU_COLOR_TABLE_TYPE = type;
+	COLOR_TABLE_TYPE = type;
 }
 
 void Hall::SetColorTable(CTType type, const Color* colorTable)
 {
-	*GPU_COLOR_TABLE_TYPE = type;
-	*GPU_COLOR_TABLE_OFFSET = colorTable;
+	throw std::exception("COLOR TABLES ARE NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+	COLOR_TABLE_TYPE = type;
+	COLOR_TABLE_OFFSET = (Color*)colorTable;
 }
 
 void Hall::SetScreenPosition(short x, short y)
 {
-	*GPU_SCREEN_X = x;
-	*GPU_SCREEN_Y = y;
+	SCREEN_X = x;
+	SCREEN_Y = y;
 }
 
 void Hall::SetColorSource(ColorSource ColorSource)
 {
-	*GPU_DRAW_COLOR_SOURCE = ColorSource;
+	DRAW_COLOR_SOURCE = ColorSource;
 }
 
 void Hall::SetColor(Color color)
 {
-	*GPU_DRAW_COLOR = color;
+	DRAW_COLOR = color;
 }
 
 void Hall::SetShape(Shape shape)
 {
-	*GPU_DRAW_SHAPE = shape;
+	DRAW_SHAPE = shape;
 }
 
 void Hall::SetRectangle(signed x, signed y, signed width, signed height)
 {
-	*GPU_SCREEN_X = x;
-	*GPU_SCREEN_Y = y;
-	*GPU_EXCERPT_WIDTH = width;
-	*GPU_EXCERPT_HEIGHT = height;
+	SCREEN_X = x;
+	SCREEN_Y = y;
+	EXCERPT_WIDTH = width;
+	EXCERPT_HEIGHT = height;
 }
 
 void Hall::Draw()
 {
-	*GPU_COMMAND_DRAW = true;
+	float width = IMAGE_FLIP_X ? -EXCERPT_WIDTH : EXCERPT_WIDTH;
+	float height = IMAGE_FLIP_Y ? -EXCERPT_HEIGHT : EXCERPT_HEIGHT;
+	float scale_x = IMAGE_SCALE_X < 0 ? (1 / (float)-IMAGE_SCALE_X) : IMAGE_SCALE_X;
+	float scale_y = IMAGE_SCALE_Y < 0 ? (1 / (float)-IMAGE_SCALE_Y) : IMAGE_SCALE_Y;
+	float dest_width = EXCERPT_WIDTH * scale_x;
+	float dest_height = EXCERPT_HEIGHT * scale_y;
+	::Vector2 origin = {0, 0};
+	::Color color = {255, 255, 255, 255};
+
+	if (DRAW_COLOR_SOURCE == MEMORY)
+	{
+		::DrawTexturePro(textures[IMAGE_START], 
+		{ (float)IMAGE_X, (float)IMAGE_Y, width, height }, 
+		{ (float)SCREEN_X, (float)SCREEN_Y, dest_width, dest_height },
+		origin, 
+		0,
+		color);
+	}
+	else if (DRAW_COLOR_SOURCE == COLOR)
+	{
+		unsigned char red = ((DRAW_COLOR >> 11) & 0b11111) << 3;
+		unsigned char green = ((DRAW_COLOR >> 6) & 0b11111) << 3;
+		unsigned char blue = ((DRAW_COLOR >> 1) & 0b11111) << 3;
+		unsigned char alpha = (DRAW_COLOR & 0b1)* 255;
+		color = {red, green, blue, alpha};
+
+		::DrawRectangle(SCREEN_X, SCREEN_Y, dest_width, dest_height, color);
+	}
 }
 
 
 
 void Hall::Draw(const unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth)
 {
-	*GPU_IMAGE_START = data;
-	*GPU_IMAGE_X = xOffset;
-	*GPU_IMAGE_Y= yOffset;
-	*GPU_IMAGE_WIDTH = dataWidth;
-	*GPU_EXCERPT_WIDTH = width;
-	*GPU_EXCERPT_HEIGHT = height;
-	*GPU_SCREEN_X = screenX;
-	*GPU_SCREEN_Y = screenY;
-	*GPU_COMMAND_DRAW = true;
+	AddImage((Color*)data, dataWidth);
+	SetColorSource(Hall::MEMORY);
+	SetScale(1, 1);
+	SetFlip(false, false);
+	IMAGE_START = (Color*)data;
+	IMAGE_X = xOffset;
+	IMAGE_Y = yOffset;
+	IMAGE_SCALE_X = 1;
+	IMAGE_SCALE_Y = 1;
+	IMAGE_WIDTH = dataWidth;
+	EXCERPT_WIDTH = width;
+	EXCERPT_HEIGHT = height;
+	SCREEN_X = screenX;
+	SCREEN_Y = screenY;
+	Draw();
 }
 
 
@@ -138,54 +198,54 @@ void Hall::Clear(unsigned short color)
 
 void Hall::SetData(const unsigned short* data)
 {
-	*GPU_IMAGE_START = data;
+	IMAGE_START = (Color*)data;
 }
 
 void Hall::SetXOffset(unsigned short xOffset)
 {
-	*GPU_IMAGE_X = xOffset;
+	IMAGE_X = xOffset;
 }
 
 void Hall::SetYOffset(unsigned short yOffset)
 {
-	*GPU_IMAGE_Y = yOffset;
+	IMAGE_Y = yOffset;
 }
 
 void Hall::SetImageWidth(unsigned short imageWidth)
 {
-	*GPU_IMAGE_WIDTH = imageWidth;
+	IMAGE_WIDTH = imageWidth;
 }
 
 void Hall::SetWidth(unsigned short width)
 {
-	*GPU_EXCERPT_WIDTH = width;
+	EXCERPT_WIDTH = width;
 }
 
 void Hall::SetHeight(unsigned short height)
 {
-	*GPU_EXCERPT_HEIGHT = height;
+	EXCERPT_HEIGHT = height;
 }
 
 
 void Hall::SetScreenX(unsigned short x)
 {
-	*GPU_SCREEN_X = x;
+	SCREEN_X = x;
 }
 
 
 void Hall::SetScreenY(unsigned short y)
 {
-	*GPU_SCREEN_Y = y;
+	SCREEN_Y = y;
 }
 
 void Hall::SetClearColor(unsigned short color)
 {
-	*GPU_DRAW_COLOR = color;
+	DRAW_COLOR = color;
 }
 
 void Hall::SetCommandDraw()
 {
-	*GPU_COMMAND_DRAW = true;
+	COMMAND_DRAW = true;
 }
 
 void Hall::SetCommandClear()
@@ -193,22 +253,39 @@ void Hall::SetCommandClear()
 	Draw();
 }
 
+void _UpdateAudio(float frameTime);
+
 void Hall::SetCommandSwapBuffers()
 {
-	*GPU_COMMAND_SWAP_BUFFERS = true;
+	::EndMode2D();
+	::EndTextureMode();
+	::BeginDrawing();
+	::DrawTexturePro(screen.texture, { 0, 0, (float)screen.texture.width, (float)-screen.texture.height}, { 0, 0, (float)::GetScreenWidth(), (float)::GetScreenHeight()}, {0, 0}, 0, ::Color{255, 255, 255, 255});
+	::EndDrawing();
+
+	_UpdateAudio(GetFrameTime());
+
+	::BeginTextureMode(screen);
+	::BeginMode2D(camera);
 }
 
 bool Hall::GetIsGPUBusy()
 {
-	return *GPU_IS_BUSY;
+	return false;
 }
 
 bool Hall::GetVSync()
 {
-	return *GPU_VSYNC;
+	//This is a bit stupid, but the swap buffer command is already ensuring that the game loop
+	//waits for vsync. Just returning true here will of course not work, of VSync is needed for
+	//something else than assuring timing
+	static bool temp = false;
+	temp = !temp;
+	return temp;
 }
 
 bool Hall::GetHSync()
 {
-	return *GPU_HSYNC;
+	//We can't do that here :(
+	return true;
 }
