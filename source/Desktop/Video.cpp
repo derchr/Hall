@@ -133,8 +133,8 @@ void Hall::SetRectangle(signed x, signed y, signed width, signed height)
 
 void Hall::Draw()
 {
-	float source_x = IMAGE_FLIP_X ? -IMAGE_X : IMAGE_X;
-	float source_y = IMAGE_FLIP_Y ? -IMAGE_Y : IMAGE_Y;
+	float width = IMAGE_FLIP_X ? -EXCERPT_WIDTH : EXCERPT_WIDTH;
+	float height = IMAGE_FLIP_Y ? -EXCERPT_HEIGHT : EXCERPT_HEIGHT;
 	float scale_x = IMAGE_SCALE_X < 0 ? (1 / (float)-IMAGE_SCALE_X) : IMAGE_SCALE_X;
 	float scale_y = IMAGE_SCALE_Y < 0 ? (1 / (float)-IMAGE_SCALE_Y) : IMAGE_SCALE_Y;
 	float dest_width = EXCERPT_WIDTH * scale_x;
@@ -145,7 +145,7 @@ void Hall::Draw()
 	if (DRAW_COLOR_SOURCE == MEMORY)
 	{
 		::DrawTexturePro(textures[IMAGE_START], 
-		{ source_x, source_y, (float)EXCERPT_WIDTH, (float)EXCERPT_HEIGHT }, 
+		{ (float)IMAGE_X, (float)IMAGE_Y, width, height }, 
 		{ (float)SCREEN_X, (float)SCREEN_Y, dest_width, dest_height },
 		origin, 
 		0,
