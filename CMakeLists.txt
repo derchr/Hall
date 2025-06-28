@@ -47,23 +47,21 @@ else()
 	)
 
 	target_compile_options(Hall
-	  PUBLIC -fno-exceptions
-	  PUBLIC -nostdlib
-	  PUBLIC -fno-unwind-tables
-	  PUBLIC -fno-rtti
-	  PUBLIC -march=rv32im
-	  PUBLIC -Os
-	  PUBLIC -ffreestanding
-	  PUBLIC -Bstatic
-	  PUBLIC -nostdinc
+	  PRIVATE -fno-exceptions
+	  PRIVATE -nostdlib
+	  PRIVATE -fno-unwind-tables
+	  PRIVATE -fno-rtti
+	  PRIVATE -march=rv32im
+	  PRIVATE -Os
+	  PRIVATE -Bstatic
+	  PRIVATE -nostdinc
 	)
 
 	target_link_options(Hall
-	  PUBLIC -nostdlib
-	  PUBLIC -Wl,--gc-sections
-	  PUBLIC -ffreestanding
-	  PUBLIC -Bstatic
-	  PUBLIC -nostdlib
+	  PRIVATE -nostdlib
+	  PRIVATE -Wl,--gc-sections
+	  PRIVATE -Bstatic
+	  PRIVATE -nostdlib
 	)
 
 	target_include_directories(Hall
