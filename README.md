@@ -3,4 +3,4 @@ This repository contains the Hall implementation for wueHans and for Desktop. Th
 
 There are some difference between these two implementations:
 - "Hall_DESKTOP" does not support arbitrary memory access
-- "HALL_DESKTOP" handles the audio restrictions rather losely. It supports up to 8 stereo channels, whereas wueHans actually only supports 4 stereo channels
+- "Hall_DESKTOP" handles the audio restrictions rather losely. It supports up to 8 stereo channels, whereas wueHans actually only supports 4 stereo channels
