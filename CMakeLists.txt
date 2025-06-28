@@ -36,6 +36,8 @@ if(DESKTOPBUILD)
 	target_include_directories(Hall_Desktop
 	  	PUBLIC SYSTEM include
 	)
+
+	target_compile_definitions(Hall_Desktop PRIVATE DESKTOP)
 else()
 
 	#This library cointains the bare metal implementation of Hall for wueHans
@@ -67,5 +69,7 @@ else()
 	target_include_directories(Hall
 	  PUBLIC SYSTEM include
 	)
+
+	target_compile_definitions(Hall PRIVATE WUEHANS)
 
 endif()

@@ -111,6 +111,10 @@ namespace Hall
 	bool GetVSync();
 	bool GetHSync();
 
+#ifdef DESKTOP
+	void Update(const Color* image);
+#endif
+
 	[[deprecated("This function misses a large amount of features and was depracted in favour of more modular setters. See the Hall::Set... functions in combination with Hall::Draw()")]]
 	void Draw(const unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth);
 
