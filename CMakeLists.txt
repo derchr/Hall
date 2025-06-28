@@ -39,6 +39,7 @@ if(DESKTOPBUILD)
 else()
 
 	#This library cointains the bare metal implementation of Hall for wueHans
+  #In order to build this target without the Softwaretemplate, you need to add and use another toolchain (see softwaretemplate/cmake and softwaretemplate/CMakeLists.txt)
 	add_library(Hall STATIC
 	  "source/wueHans/Audio.cpp"
 	  "source/wueHans/System.cpp"
