@@ -164,7 +164,7 @@ void Hall::Draw()
 }
 
 #ifdef DESKTOP
-void Hall::Update(const Color* image)
+void Hall::UpdateRaylibTexture(const Color* image)
 {
 	::UpdateTexture(textures[(Color*)image], image);
 }
