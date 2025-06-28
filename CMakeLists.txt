@@ -36,7 +36,7 @@ if(DESKTOPBUILD)
 	target_include_directories(Hall_Desktop
 	  	PUBLIC SYSTEM include
 	)
-	else()
+else()
 
 	#This library cointains the bare metal implementation of Hall for wueHans
 	add_library(Hall STATIC
