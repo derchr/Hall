@@ -12,7 +12,7 @@ static const unsigned short ctMasks[6] = {0, 0b1, 0b11, 0b1111, 0b11111111, 0b11
 
 
 std::map<Hall::Color*, ::Texture2D> textures;
-Hall::Color colorTable[2048];
+Hall::Color Hall::colorTable[2048];
 
 Hall::Color* 		IMAGE_START;
 short 				IMAGE_X;
@@ -152,7 +152,7 @@ static ::Image CreateFromColorTable_COLOR()
 	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
 	{
 		index = (DRAW_COLOR >> j) && ctMasks[COLOR_TABLE_TYPE];
-		tempImage[i] = colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		tempImage[i] = Hall::colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
 		j -= ctSizes[COLOR_TABLE_TYPE];
 		if(j < 0) 
 		{
@@ -180,7 +180,7 @@ static ::Image CreateFromColorTable_MEMORY()
 	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
 	{
 		index = (color >> j) && ctMasks[COLOR_TABLE_TYPE];
-		tempImage[i] = colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		tempImage[i] = Hall::colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
 		j -= ctSizes[COLOR_TABLE_TYPE];
 		if(j < 0) 
 		{
