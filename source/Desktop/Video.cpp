@@ -241,6 +241,7 @@ void Hall::Draw()
 		if(COLOR_TABLE_TYPE != NONE)
 		{
 			free(image.data);
+			::UnloadTexture(texture);
 		}
 	}
 
