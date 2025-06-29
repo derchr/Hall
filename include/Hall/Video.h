@@ -5,7 +5,13 @@ namespace Hall
 	typedef unsigned short Color;
 	typedef unsigned int   IndexContainer;
 
-	static Color* const COLOR_TABLE_MEMORY = (Color*)0x02002000;
+#ifdef WUEHANS
+	Color* const COLOR_TABLE_MEMORY = (Color*)0x02002000;
+#endif
+#ifdef DESKTOP
+	extern Hall::Color colorTable[2048];
+	Color* const COLOR_TABLE_MEMORY = colorTable;
+#endif
 
 	enum CTType  //Color table type
 	{

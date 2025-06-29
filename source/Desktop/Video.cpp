@@ -1,12 +1,18 @@
 #include <Hall/Video.h>
 #include <map>
+#include <cstdlib>
 extern "C" 
 {
 	#include "raylib.h"
 }
 #include <exception>
 
+static const int ctSizes[6] = {0, 1, 2, 4, 8, 16};
+static const unsigned short ctMasks[6] = {0, 0b1, 0b11, 0b1111, 0b11111111, 0b1111111111111111};
+
+
 std::map<Hall::Color*, ::Texture2D> textures;
+Hall::Color colorTable[2048];
 
 Hall::Color* 		IMAGE_START;
 short 				IMAGE_X;
@@ -131,6 +137,62 @@ void Hall::SetRectangle(signed x, signed y, signed width, signed height)
 	EXCERPT_HEIGHT = height;
 }
 
+static ::Image CreateFromColorTable_COLOR()
+{
+	Hall::Color* tempImage = (Hall::Color*)malloc(sizeof(Hall::Color) * EXCERPT_WIDTH * EXCERPT_HEIGHT);
+	::Image image;
+	image.data = tempImage;
+	image.width = EXCERPT_HEIGHT;
+	image.height = EXCERPT_WIDTH; 
+	image.mipmaps = 1;
+	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
+	
+	int j = 16 - ctSizes[COLOR_TABLE_TYPE];
+	unsigned short index;
+	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
+	{
+		index = (DRAW_COLOR >> j) && ctMasks[COLOR_TABLE_TYPE];
+		tempImage[i] = colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		j -= ctSizes[COLOR_TABLE_TYPE];
+		if(j < 0) 
+		{
+			j = 16 - ctSizes[COLOR_TABLE_TYPE];
+		}
+	}
+
+	return image;
+}
+
+static ::Image CreateFromColorTable_MEMORY()
+{
+	Hall::Color* tempImage = (Hall::Color*)malloc(sizeof(Hall::Color) * EXCERPT_WIDTH * EXCERPT_HEIGHT);
+	::Image image;
+	image.data = tempImage;
+	image.width = EXCERPT_HEIGHT;
+	image.height = EXCERPT_WIDTH; 
+	image.mipmaps = 1;
+	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
+	
+	int j = 16 - ctSizes[COLOR_TABLE_TYPE];
+	int k = 0;
+	Hall::Color color = IMAGE_START[k];
+	unsigned short index;
+	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
+	{
+		index = (color >> j) && ctMasks[COLOR_TABLE_TYPE];
+		tempImage[i] = colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		j -= ctSizes[COLOR_TABLE_TYPE];
+		if(j < 0) 
+		{
+			j = 16 - ctSizes[COLOR_TABLE_TYPE];
+			k++;
+			color = IMAGE_START[k];
+		}
+	}
+
+	return image;
+}
+
 void Hall::Draw()
 {
 	float width = IMAGE_FLIP_X ? -EXCERPT_WIDTH : EXCERPT_WIDTH;
@@ -142,16 +204,7 @@ void Hall::Draw()
 	::Vector2 origin = {0, 0};
 	::Color color = {255, 255, 255, 255};
 
-	if (DRAW_COLOR_SOURCE == MEMORY)
-	{
-		::DrawTexturePro(textures[IMAGE_START], 
-		{ (float)IMAGE_X, (float)IMAGE_Y, width, height }, 
-		{ (float)SCREEN_X, (float)SCREEN_Y, dest_width, dest_height },
-		origin, 
-		0,
-		color);
-	}
-	else if (DRAW_COLOR_SOURCE == COLOR)
+	if (COLOR_TABLE_TYPE == NONE && DRAW_COLOR_SOURCE == COLOR)
 	{
 		unsigned char red = ((DRAW_COLOR >> 11) & 0b11111) << 3;
 		unsigned char green = ((DRAW_COLOR >> 6) & 0b11111) << 3;
@@ -161,6 +214,37 @@ void Hall::Draw()
 
 		::DrawRectangle(SCREEN_X, SCREEN_Y, dest_width, dest_height, color);
 	}
+	else
+	{
+		Texture2D texture;
+		Image image;
+		if(COLOR_TABLE_TYPE != NONE && DRAW_COLOR_SOURCE == COLOR)
+		{
+			image = CreateFromColorTable_COLOR();
+			texture = ::LoadTextureFromImage(image);
+		}
+		else if(COLOR_TABLE_TYPE != NONE && DRAW_COLOR_SOURCE == MEMORY)
+		{
+			image = CreateFromColorTable_MEMORY();
+			texture = ::LoadTextureFromImage(image);
+		}
+		else if(COLOR_TABLE_TYPE == NONE && DRAW_COLOR_SOURCE == MEMORY)
+		{
+			texture = textures[IMAGE_START];
+		}
+
+		::DrawTexturePro(texture, 
+		{ (float)IMAGE_X, (float)IMAGE_Y, width, height }, 
+		{ (float)SCREEN_X, (float)SCREEN_Y, dest_width, dest_height },
+		origin, 0, color);
+
+		if(COLOR_TABLE_TYPE != NONE)
+		{
+			free(image.data);
+		}
+	}
+
+
 }
 
 #ifdef DESKTOP
