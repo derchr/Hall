@@ -25,13 +25,13 @@ volatile bool* GPU_HSYNC                  = (bool*)				(GPU_START + 80);
 volatile bool* GPU_COMMAND_SWAP_BUFFERS   = (bool*)				(GPU_START + 84);
 volatile bool* GPU_VSYNC_BUFFER_SWAP      = (bool*)				(GPU_START + 88);
 
-void Hall::SetImage(const Color* image, unsigned short imageWidth)
+void Hall::SetImage(const Color* image, unsigned short imageWidth, unsigned short imageHeight)
 {
 	*GPU_IMAGE_START = image;
 	*GPU_IMAGE_WIDTH = imageWidth;
 }
 
-void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth)
+void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth, unsigned short imageHeight)
 {
 	//This is ugly code, but it represents the hardware
 	*GPU_IMAGE_START = (const Color*)image;
