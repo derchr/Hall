@@ -120,7 +120,7 @@ namespace Hall
 	bool GetHSync();
 
 #ifdef DESKTOP
-	void UpdateRaylibTexture(const Color* image);
+	void UpdateRaylibTexture(const Color* image, short width, short height);
 #endif
 
 	[[deprecated("This function misses a large amount of features and was depracted in favour of more modular setters. See the Hall::Set... functions in combination with Hall::Draw()")]]

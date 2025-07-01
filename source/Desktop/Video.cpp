@@ -1,17 +1,44 @@
 #include <Hall/Video.h>
 #include <map>
 #include <cstdlib>
+#include <unordered_map>
 extern "C" 
 {
 	#include "raylib.h"
 }
 #include <exception>
 
+struct TextureID
+{
+	Hall::Color* color;
+	unsigned short imageWidth;
+	unsigned short imageHeight;
+
+	bool operator==(const TextureID& other) const
+	{
+		return color == other.color && imageWidth == other.imageWidth && imageHeight == other.imageHeight;
+	}
+};
+
+template<>
+struct std::hash<TextureID>
+{
+	std::size_t operator()(const TextureID& textureID) const
+	{
+		std::size_t h1 = std::hash<Hall::Color*>{}(textureID.color);
+		std::size_t h2 = std::hash<short>{}(textureID.imageWidth);
+		std::size_t h3 = std::hash<short>{}(textureID.imageHeight);
+		std::size_t h = h1 ^ (h2 << 1);
+		h = h ^ (h3 << 1);
+		return h;
+	}
+};
+
+
 static std::map<Hall::CTType, int> ctSizes{ {Hall::NONE, 0}, {Hall::BIT_1, 1}, {Hall::BIT_2, 2}, {Hall::BIT_4, 4}, {Hall::BIT_8, 8}, {Hall::BIT_16, 16} };
 static std::map<int, unsigned short> ctMasks{ {Hall::NONE, 0}, {Hall::BIT_1, 0b1}, {Hall::BIT_2, 0b11}, {Hall::BIT_4, 0b1111}, {Hall::BIT_8, 0b11111111}, {Hall::BIT_16, 0b1111111111111111} };
 
-
-std::map<Hall::Color*, ::Texture2D> textures;
+std::unordered_map<TextureID, ::Texture2D> textures;
 std::map<Hall::Color*, Hall::Color*> ctResolution; //Maps a color table to a buffer with its resolved ct
 Hall::Color Hall::colorTable[2048];
 
@@ -39,12 +66,14 @@ bool 				HSYNC;
 bool 				COMMAND_SWAP_BUFFERS;
 bool 				VSYNC_BUFFER_SWAP;
 
+unsigned short IMAGE_HEIGHT; //This only matters for making the textureID less likely to fail
 ::RenderTexture2D screen;
 ::Camera2D camera;
 
 static void AddImage(Hall::Color* data, short imageWidth, short imageHeight)
 {
-	if(textures.count(data)) return;
+	TextureID textureID{ data, (unsigned short)imageWidth, (unsigned short)imageHeight };
+	if(textures.count(textureID)) return;
 	::Image image;
 	image.data = data;
 	image.width = imageWidth;
@@ -53,7 +82,7 @@ static void AddImage(Hall::Color* data, short imageWidth, short imageHeight)
 	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
 	Texture2D texture = ::LoadTextureFromImage(image);
 
-	textures[data] = texture;
+	textures[textureID] = texture;
 }
 
 void Hall::SetImage(const Color* image, unsigned short imageWidth, unsigned short imageHeight)
@@ -61,6 +90,7 @@ void Hall::SetImage(const Color* image, unsigned short imageWidth, unsigned shor
 	AddImage((Color*)image, imageWidth, imageHeight);
 	IMAGE_START = (Color*)image;
 	IMAGE_WIDTH = imageWidth;
+	IMAGE_HEIGHT = imageHeight;
 }
 
 void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth, unsigned short imageHeight)
@@ -69,6 +99,7 @@ void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth, unsi
 	AddImage((Color*)image, imageWidth, imageHeight);
 	IMAGE_START = (Color*)image;
 	IMAGE_WIDTH = imageWidth;
+	IMAGE_HEIGHT = imageHeight;
 }
 
 void Hall::SetExcerpt(short x, short y)
@@ -228,7 +259,7 @@ void Hall::Draw()
 			else
 			{
 				CreateFromColorTable_COLOR(ctResolution[IMAGE_START]);
-				Hall::UpdateRaylibTexture(ctResolution[IMAGE_START]);
+				Hall::UpdateRaylibTexture(ctResolution[IMAGE_START], IMAGE_WIDTH, IMAGE_HEIGHT);
 			}
 		}
 		else if(COLOR_TABLE_TYPE != NONE && DRAW_COLOR_SOURCE == MEMORY)
@@ -243,14 +274,15 @@ void Hall::Draw()
 			else
 			{
 				CreateFromColorTable_MEMORY(ctResolution[IMAGE_START]);
-				Hall::UpdateRaylibTexture(ctResolution[IMAGE_START]);
+				Hall::UpdateRaylibTexture(ctResolution[IMAGE_START], IMAGE_WIDTH, IMAGE_HEIGHT);
 			}
-
-			texture = textures[ctResolution[IMAGE_START]];
+			TextureID textureID{ ctResolution[IMAGE_START], IMAGE_WIDTH, IMAGE_HEIGHT };
+			texture = textures[textureID];
 		}
 		else if(COLOR_TABLE_TYPE == NONE && DRAW_COLOR_SOURCE == MEMORY)
 		{
-			texture = textures[IMAGE_START];
+			TextureID textureID{ IMAGE_START, IMAGE_WIDTH, IMAGE_HEIGHT };
+			texture = textures[textureID];
 		}
 
 		::DrawTexturePro(texture, 
@@ -263,9 +295,9 @@ void Hall::Draw()
 }
 
 #ifdef DESKTOP
-void Hall::UpdateRaylibTexture(const Color* image)
+void Hall::UpdateRaylibTexture(const Color* image, short width, short height)
 {
-	::UpdateTexture(textures[(Color*)image], image);
+	::UpdateTexture(textures[TextureID{(Color*)image, (unsigned short)width, (unsigned short)height}], image);
 }
 #endif
 
