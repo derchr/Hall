@@ -42,12 +42,14 @@ namespace Hall
 	/// @brief
 	/// @param image A pointer to the first pixel of the image
 	/// @param imageWidth The width of the image in pixels
-	void SetImage(const Color* image, unsigned short imageWidth);
+	/// @param imageHeight The height of the image in pixels
+	void SetImage(const Color* image, unsigned short imageWidth, unsigned short imageHeight);
 
 	/// @brief
 	/// @param image A pointer to the first pixel of the image
 	/// @param imageWidth The width of the image in pixels
-	void SetImage(const IndexContainer* image, unsigned short imageWidth);
+	/// @param imageHeight The height of the image in pixels
+	void SetImage(const IndexContainer* image, unsigned short imageWidth, unsigned short imageHeight);
 
 
 	/// @brief Sets the x and y position of the excerpt of the image that will be drawn

@@ -42,13 +42,13 @@ bool 				VSYNC_BUFFER_SWAP;
 ::RenderTexture2D screen;
 ::Camera2D camera;
 
-static void AddImage(Hall::Color* data, short imageWidth)
+static void AddImage(Hall::Color* data, short imageWidth, short imageHeight)
 {
 	if(textures.count(data)) return;
 	::Image image;
 	image.data = data;
 	image.width = imageWidth;
-	image.height = 480; //Just needs to be higher than any actual height. I hope this does not breaks something
+	image.height = imageHeight;
 	image.mipmaps = 1;
 	image.format = PIXELFORMAT_UNCOMPRESSED_R5G5B5A1;
 	Texture2D texture = ::LoadTextureFromImage(image);
@@ -56,17 +56,17 @@ static void AddImage(Hall::Color* data, short imageWidth)
 	textures[data] = texture;
 }
 
-void Hall::SetImage(const Color* image, unsigned short imageWidth)
+void Hall::SetImage(const Color* image, unsigned short imageWidth, unsigned short imageHeight)
 {
-	AddImage((Color*)image, imageWidth);
+	AddImage((Color*)image, imageWidth, imageHeight);
 	IMAGE_START = (Color*)image;
 	IMAGE_WIDTH = imageWidth;
 }
 
-void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth)
+void Hall::SetImage(const IndexContainer* image, unsigned short imageWidth, unsigned short imageHeight)
 {
 	//This is ugly code, but it represents the hardware
-	AddImage((Color*)image, imageWidth);
+	AddImage((Color*)image, imageWidth, imageHeight);
 	IMAGE_START = (Color*)image;
 	IMAGE_WIDTH = imageWidth;
 }
@@ -223,7 +223,7 @@ void Hall::Draw()
 				Hall::Color* imageBuffer = (Hall::Color*)malloc(sizeof(Hall::Color) * EXCERPT_WIDTH * EXCERPT_HEIGHT);
 				ctResolution[IMAGE_START] = imageBuffer;
 				CreateFromColorTable_COLOR(ctResolution[IMAGE_START]);
-				AddImage(ctResolution[IMAGE_START], width);
+				AddImage(ctResolution[IMAGE_START], width, height);
 			}
 			else
 			{
@@ -238,7 +238,7 @@ void Hall::Draw()
 				Hall::Color* imageBuffer = (Hall::Color*)malloc(sizeof(Hall::Color) * EXCERPT_WIDTH * EXCERPT_HEIGHT);
 				ctResolution[IMAGE_START] = imageBuffer;
 				CreateFromColorTable_MEMORY(ctResolution[IMAGE_START]);
-				AddImage(ctResolution[IMAGE_START], width);
+				AddImage(ctResolution[IMAGE_START], width, height);
 			}
 			else
 			{
@@ -272,7 +272,7 @@ void Hall::UpdateRaylibTexture(const Color* image)
 
 void Hall::Draw(const unsigned short* data, unsigned short xOffset, unsigned short yOffset, unsigned short screenX, unsigned short screenY, unsigned short width, unsigned short height, unsigned short dataWidth)
 {
-	AddImage((Color*)data, dataWidth);
+	AddImage((Color*)data, dataWidth, 480); //This could cause the program on windows to cause a memory access violation
 	SetColorSource(Hall::MEMORY);
 	SetScale(1, 1);
 	SetFlip(false, false);
