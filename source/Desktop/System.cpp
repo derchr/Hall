@@ -81,7 +81,7 @@ unsigned int Hall::GetSystemTimeExcerpt(int precision)
 	return 0;
 }
 
-unsigned short Hall::GetController(int id)
+Hall::ControllerState Hall::GetController(int id)
 {
 	bool left, right, up, down;
 	bool start, select;
@@ -135,62 +135,62 @@ unsigned short Hall::GetController(int id)
 	return result;
 }
 
-bool Hall::GetA(unsigned short controller)
+bool Hall::GetA(ControllerState controller)
 {
 	return controller & (1 << 8);
 }
 
-bool Hall::GetB(unsigned short controller)
+bool Hall::GetB(ControllerState controller)
 {
 	return controller & (1 << 0);
 }
 
-bool Hall::GetX(unsigned short controller)
+bool Hall::GetX(ControllerState controller)
 {
 	return controller & (1 << 9);
 }
 
-bool Hall::GetY(unsigned short controller)
+bool Hall::GetY(ControllerState controller)
 {
 	return controller & (1 << 1);
 }
 
-bool Hall::GetStart(unsigned short controller)
+bool Hall::GetStart(ControllerState controller)
 {
 	return controller & (1 << 3);
 }
 
-bool Hall::GetSelect(unsigned short controller)
+bool Hall::GetSelect(ControllerState controller)
 {
 	return controller & (1 << 2);
 }
 
-bool Hall::GetUp(unsigned short controller)
+bool Hall::GetUp(ControllerState controller)
 {
 	return controller & (1 << 4);
 }
 
-bool Hall::GetDown(unsigned short controller)
+bool Hall::GetDown(ControllerState controller)
 {
 	return controller & (1 << 5);
 }
 
-bool Hall::GetLeft(unsigned short controller)
+bool Hall::GetLeft(ControllerState controller)
 {
 	return controller & (1 << 6);
 }
 
-bool Hall::GetRight(unsigned short controller)
+bool Hall::GetRight(ControllerState controller)
 {
 	return controller & (1 << 7);
 }
 
-bool Hall::GetL(unsigned short controller)
+bool Hall::GetL(ControllerState controller)
 {
 	return controller & (1 << 10);
 }
 
-bool Hall::GetR(unsigned short controller)
+bool Hall::GetR(ControllerState controller)
 {
 	return controller & (1 << 11);
 }
