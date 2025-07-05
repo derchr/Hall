@@ -4,7 +4,7 @@ extern "C"
 {
 	#include "raylib.h"
 }
-#include <exception>
+#include <iostream>
 
 //Change these, if you want to change the desktop mapping of the controllers
 const ::KeyboardKey CONT0_UP 		= KEY_W;
@@ -77,7 +77,7 @@ unsigned long long Hall::GetSystemTime()
 
 unsigned int Hall::GetSystemTimeExcerpt(int precision)
 {
-	throw std::exception("SYSTEM TIME EXCERPT IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+	std::cout << "SYSTEM TIME EXCERPT IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 	return 0;
 }
 

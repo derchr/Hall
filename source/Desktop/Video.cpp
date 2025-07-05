@@ -2,11 +2,11 @@
 #include <map>
 #include <cstdlib>
 #include <unordered_map>
+#include <cstdint>
 extern "C" 
 {
 	#include "raylib.h"
 }
-#include <exception>
 
 struct TextureID
 {
@@ -183,7 +183,7 @@ void CreateFromColorTable_COLOR(Hall::Color* buffer)
 	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
 	{
 		index = (DRAW_COLOR >> j) && ctMasks[COLOR_TABLE_TYPE];
-		tempImage[i] = Hall::colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		tempImage[i] = Hall::colorTable[(std::uintptr_t)COLOR_TABLE_OFFSET + index];
 		j -= ctSizes[COLOR_TABLE_TYPE];
 		if(j < 0) 
 		{
@@ -204,7 +204,7 @@ void CreateFromColorTable_MEMORY(Hall::Color* buffer)
 	for(int i = 0; i < EXCERPT_WIDTH * EXCERPT_HEIGHT; i++)
 	{
 		index = (indexContainer >> j) & ctMasks[COLOR_TABLE_TYPE];
-		Hall::Color color = Hall::colorTable[(unsigned int)COLOR_TABLE_OFFSET + index];
+		Hall::Color color = Hall::colorTable[(std::uintptr_t)COLOR_TABLE_OFFSET + index];
 		tempImage[i] = color;
 		j -= ctSizes[COLOR_TABLE_TYPE];
 		if(j < 0) 

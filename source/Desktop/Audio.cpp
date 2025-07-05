@@ -3,7 +3,7 @@ extern "C"
 {
 	#include "raylib.h"
 }
-#include <exception>
+#include <iostream>
 
 //Sound does not behave exactly as on wueHans
 
@@ -70,7 +70,7 @@ void Hall::SetupMono(int channelID, const short* data, int sampleCount, unsigned
 void Hall::SetupMono(int channelID, const short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
 {
 	if(loopStart != 0)
-		throw std::exception("loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+		std::cout << "loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 
 	::Wave wave;
 	wave.channels = 1;
@@ -111,7 +111,7 @@ void Hall::SetupStereo(int channelID_left, int channelID_right, const short* dat
 void Hall::SetupStereo(int channelID_left, int channelID_right, const short* data, int sampleCount, unsigned int loopStart, unsigned int loopEnd, unsigned char volume)
 {
 	if(loopStart != 0)
-		throw std::exception("loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+		std::cout << "loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 
 	::Wave wave;
 	wave.channels = 2;
@@ -160,7 +160,7 @@ void Hall::Pause(unsigned char channelSelect)
 
 void Hall::SetData(unsigned char channelSelect, short* data)
 {
-	throw std::exception("Hall::SetData IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+	std::cout << "Hall::SetData IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 }
 
 void Hall::SetLoop(unsigned char channelSelect, bool isLooping)
@@ -178,7 +178,7 @@ void Hall::SetLoop(unsigned char channelSelect, bool isLooping)
 void Hall::SetLoopBoundaries(unsigned char channelSelect, int start, int end)
 {
 	if(start != 0)
-		throw std::exception("loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+		std::cout << "loopStart != 0 IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -193,12 +193,12 @@ void Hall::SetLoopBoundaries(unsigned char channelSelect, int start, int end)
 
 void Hall::SetPosition(unsigned char channelSelect, int position)
 {
-	throw std::exception("Hall::SetPosition IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+	std::cout << "Hall::SetPosition IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 }
 
 void Hall::SetSample(unsigned char channelSelect, short sample)
 {
-	throw std::exception("Hall::SetSample IS NOT SUPPORTED IN DESKTOP VERSION OF HALL");
+	std::cout << "Hall::SetSample IS NOT SUPPORTED IN DESKTOP VERSION OF HALL" << std::endl;
 }
 
 void Hall::SetVolume(unsigned char channelSelect, unsigned char volume)
